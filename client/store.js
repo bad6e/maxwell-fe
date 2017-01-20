@@ -1,28 +1,20 @@
-import { createStore, compose } from 'redux';
-import { syncHistoryWithStore} from 'react-router-redux';
-import { browserHistory } from 'react-router';
+import reducer from './reducers/index';
+import { createStore, applyMiddleware, compose } from 'redux';
+import promise from 'redux-promise';
 
-// import the root reducer
-import rootReducer from './reducers/index';
+export default function configureStore(initialState) {
+  const finalCreateStore = compose(
+    applyMiddleware(promise),
+    window.devToolsExtension ? window.devToolsExtension() : f => f
+  )(createStore);
 
-import comments from './data/comments';
-import posts from './data/posts';
+  const store = finalCreateStore(reducer, initialState);
 
-// create an object for the default data
-const defaultState = {
-  posts,
-  comments
-};
-
-const store = createStore(rootReducer, defaultState);
-
-export const history = syncHistoryWithStore(browserHistory, store);
-
-if(module.hot) {
-  module.hot.accept('./reducers/',() => {
-    const nextRootReducer = require('./reducers/index').default;
-    store.replaceReducer(nextRootReducer);
-  });
+  if (module.hot) {
+    module.hot.accept('./reducers', () => {
+      const nextReducer = require('./reducers/index');
+      store.replaceReducer(nextReducer);
+    });
+  }
+  return store;
 }
-
-export default store;

@@ -1,0 +1,30 @@
+.row {
+  margin-right: 0;
+  margin-left: 0;
+}
+
+.navbar-default {
+  margin-bottom: 0;
+}
+
+.number-of-results {
+  background-color: #EBEBEB;
+}
+
+.results {
+  float: right;
+  padding-right: 10px;
+}
+
+.price {
+  float: right;
+}
+
+.per-night {
+  float: right;
+  font-size: .5em;
+}
+
+.listing {
+  padding-bottom: 15px;
+}
