@@ -11,6 +11,7 @@ class Main extends React.Component {
     super();
 
     this.renderListings = this.renderListings.bind(this);
+    this.formatSearchUrl = this.formatSearchUrl.bind(this);
   }
 
   componentDidMount() {
@@ -29,6 +30,16 @@ class Main extends React.Component {
     })
   }
 
+  formatSearchUrl(value, selector) {
+    let url = `https://api.airbnb.com/v1/listings/search?key=bcxkf89pxe8srriv8h3rj7w9t`
+
+    if (selector === 'location') {
+      url += `&location=${value}`;
+    }
+
+    this.props.searchPlaces(url);
+  }
+
   render() {
     const { places = [], count } = this.props.places || {};
     return (
@@ -36,7 +47,9 @@ class Main extends React.Component {
         <nav className="navbar navbar-default">
           <div className="container-fluid">
             <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-              <Search/>
+              <Search
+                formatSearchUrl={this.formatSearchUrl}
+              />
               <GuestNumber/>
               <DatePicker/>
             </div>
