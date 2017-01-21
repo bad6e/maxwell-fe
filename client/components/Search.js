@@ -4,18 +4,19 @@ class Search extends React.Component {
   constructor() {
     super();
     this.state = {value: ''};
-
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleChange(event) {
-    this.setState({value: event.target.value});
+    this.setState({value: event.target.value}, function () {
+      this.props.formatSearchUrl(this.state.value, 'location');
+    });
   }
 
   handleSubmit(event) {
     event.preventDefault();
-    this.props.formatSearchUrl(this.state.value, 'location');
+    this.props.checkIfSearchBlank(this.state.value);
   }
 
   render() {
