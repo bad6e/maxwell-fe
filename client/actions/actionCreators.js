@@ -11,8 +11,8 @@ export function fetchPlaces() {
     return axios.post(`${RAILS_URL}`, {
       url: `${URL}`
     })
-    .then(console.log('fetching places...'))
     .then(response => dispatch(receivePlaces(response)))
+    .then(console.log('fetching places...'))
   }
 }
 
