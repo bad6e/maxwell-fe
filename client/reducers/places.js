@@ -1,18 +1,22 @@
 import {
-  FETCH_PLACES,
-  FETCH_PLACES_SUCCESS,
-  FETCH_PLACES_FAILURE
+  RECEIVE_PLACES
 } from '../actions/actionCreators';
 
-function getPlaces(state = [], action) {
-  let error;
+function places(state = {
+  places: [],
+  count: '',
+  loading: true
+}, action) {
   switch(action.type) {
-  case FETCH_PLACES:
-    console.log("fetching places!");
-    return { ...state, placesList: { places: action.payload.payload.listings, count: action.payload.payload.listings_count, error: null, loading: true } };
+  case RECEIVE_PLACES:
+    return Object.assign({}, state, {
+      places: action.places.listings,
+      count: action.places.listings_count,
+      loading: false
+    })
   default:
     return state;
   }
 }
 
-export default getPlaces;
+export default places

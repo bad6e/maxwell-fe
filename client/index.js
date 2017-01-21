@@ -1,22 +1,8 @@
-import React from 'react';
-import { render } from 'react-dom';
-import { Provider } from 'react-redux';
+import React from 'react'
+import { render } from 'react-dom'
+import Root from './containers/Root'
 
-// Import Xss
-import css from './styles/style.css';
-
-// Import Components
-import App from './components/App';
-
-// Import Store
-import configureStore from './store';
-
-const store = configureStore();
-
-const router = (
-  <Provider store={store}>
-    <App/>
-  </Provider>
+render(
+  <Root />,
+  document.getElementById('root')
 )
-
-render(router, document.getElementById('root'));
