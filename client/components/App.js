@@ -5,7 +5,7 @@ import Main from './Main';
 
 const mapStateToProps = (state) => {
   return {
-    placesList: state.places.placesList
+    places: state.places
   };
 }
 

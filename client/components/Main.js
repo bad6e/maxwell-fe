@@ -11,23 +11,11 @@ class Main extends React.Component {
     super();
 
     this.renderListings = this.renderListings.bind(this);
-    // this.formatSearchUrl = this.formatSearchUrl.bind(this);
   }
 
   componentDidMount() {
     this.props.fetchPlaces();
   }
-
-  // formatSearchUrl() {
-  //   let url = `/api/v1/search?`;
-  //   if (this.state.checkedTacoIds.length > 0) {
-  //     url += `&tacos=${this.state.checkedTacoIds}`;
-  //   }
-  //   if (this.state.checkedSalsaIds.length > 0) {
-  //     url += `&salsas=${this.state.checkedSalsaIds}`;
-  //   }
-  //   return url;
-  // },
 
   renderListings(listings) {
     return listings.map(listing => {
@@ -42,15 +30,13 @@ class Main extends React.Component {
   }
 
   render() {
-    const { places = [], count } = this.props.placesList || {};
+    const { places = [], count } = this.props.places || {};
     return (
       <div className="row">
         <nav className="navbar navbar-default">
           <div className="container-fluid">
             <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-              <Search
-                searchPlaces={this.props.searchPlaces}
-              />
+              <Search/>
               <GuestNumber/>
               <DatePicker/>
             </div>
