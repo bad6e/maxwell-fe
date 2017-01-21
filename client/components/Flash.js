@@ -1,7 +1,7 @@
 import React from 'react';
 
 class Flash extends React.Component {
-   constructor() {
+  constructor() {
     super();
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -23,4 +23,4 @@ class Flash extends React.Component {
   }
 }
 
-export default Flash
+export default Flash;

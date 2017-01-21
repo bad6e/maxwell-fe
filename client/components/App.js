@@ -7,11 +7,11 @@ const mapStateToProps = (state) => {
   return {
     places: state.places
   };
-}
+};
 
 const mapDispachToProps = (dispatch) => {
   return bindActionCreators(actionCreators, dispatch);
-}
+};
 
 const App = connect(mapStateToProps, mapDispachToProps)(Main);
 

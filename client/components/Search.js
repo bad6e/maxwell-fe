@@ -16,7 +16,7 @@ class Search extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    this.props.checkIfSearchBlank(this.state.value);
+    this.props.checkIfSearchBlank();
   }
 
   render() {
@@ -29,8 +29,8 @@ class Search extends React.Component {
           <button type="submit" className="btn btn-default">Search</button>
         </form>
       </div>
-    )
+    );
   }
 }
 
-export default Search
+export default Search;

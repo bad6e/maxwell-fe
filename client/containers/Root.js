@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import { Provider } from 'react-redux'
+import React, { Component } from 'react';
+import { Provider } from 'react-redux';
 
 // Import CSS
 import css from '../styles/style.css';
@@ -18,6 +18,6 @@ export default class Root extends Component {
       <Provider store={store}>
         <App />
       </Provider>
-    )
+    );
   }
 }

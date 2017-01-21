@@ -6,8 +6,8 @@ class NumberOfResults extends React.Component {
       <div className="row number-of-results">
         <h5 className="results">{this.props.count} Results</h5>
       </div>
-    )
+    );
   }
 }
 
-export default NumberOfResults
+export default NumberOfResults;

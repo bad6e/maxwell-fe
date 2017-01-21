@@ -9,7 +9,7 @@ class LoaderImg extends React.Component {
           <p className="loading-cards-text">Loading Listings...</p>
         </div>
       </div>
-    )
+    );
   }
 }
 

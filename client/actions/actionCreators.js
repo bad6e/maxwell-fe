@@ -4,17 +4,16 @@ export const FETCH_PLACES = 'FETCH_PLACES';
 export const RECEIVE_PLACES = 'RECEIVE_PLACES';
 export const SEARCH_PLACES = 'SEARCH_PLACES';
 
-const URL = 'https://api.airbnb.com/v1/listings/search?key=bcxkf89pxe8srriv8h3rj7w9t&location=denver'
-const RAILS_URL = 'http://localhost:3001/api/v1/search'
+const URL = 'https://api.airbnb.com/v1/listings/search?key=bcxkf89pxe8srriv8h3rj7w9t&location=denver';
+const RAILS_URL = 'http://localhost:3001/api/v1/search';
 
 export function fetchPlaces() {
   return dispatch => {
     return axios.post(`${RAILS_URL}`, {
       url: `${URL}`
     })
-    .then(response => dispatch(receivePlaces(response)))
-    .then(console.log('fetching places...'))
-  }
+    .then(response => dispatch(receivePlaces(response)));
+  };
 }
 
 export function searchPlaces(url) {
@@ -22,9 +21,8 @@ export function searchPlaces(url) {
     return axios.post(`${RAILS_URL}`, {
       url: `${url}`
     })
-    .then(response => dispatch(receivePlaces(response)))
-    .then(console.log('fetching places...'))
-  }
+    .then(response => dispatch(receivePlaces(response)));
+  };
 }
 
 export function receivePlaces(response) {
@@ -32,5 +30,5 @@ export function receivePlaces(response) {
     type: RECEIVE_PLACES,
     places: response.data,
     loading: true
-  }
+  };
 }
