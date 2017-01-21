@@ -4,18 +4,19 @@ class Search extends React.Component {
   constructor() {
     super();
     this.state = {value: ''};
-
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleChange(event) {
-    this.setState({value: event.target.value});
+    this.setState({value: event.target.value}, function () {
+      this.props.formatSearchUrl(this.state.value, 'location');
+    });
   }
 
   handleSubmit(event) {
     event.preventDefault();
-    // this.props.searchPlaces(this.state.value);
+    this.props.checkIfSearchBlank();
   }
 
   render() {
@@ -28,8 +29,8 @@ class Search extends React.Component {
           <button type="submit" className="btn btn-default">Search</button>
         </form>
       </div>
-    )
+    );
   }
 }
 
-export default Search
+export default Search;

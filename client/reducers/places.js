@@ -13,10 +13,10 @@ function places(state = {
       places: action.places.listings,
       count: action.places.listings_count,
       loading: false
-    })
+    });
   default:
     return state;
   }
 }
 
-export default places
+export default places;

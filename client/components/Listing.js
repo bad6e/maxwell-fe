@@ -18,8 +18,8 @@ class Listing extends React.Component {
           <h6>{info.smart_location}</h6>
         </div>
       </div>
-    )
+    );
   }
 }
 
-export default Listing
+export default Listing;
