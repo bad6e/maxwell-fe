@@ -64,9 +64,7 @@ class Main extends React.Component {
     if (this.state.location === '' || this.state.checkin === '' || this.state.checkout === '') {
       this.formatErrorMessages();
     } else {
-      this.setState({blank: false}, function() {
-        this.search();
-      });
+      this.setState({blank: false}, this.search);
     }
   }
 
