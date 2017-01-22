@@ -14,13 +14,13 @@ class DatePicker extends React.Component {
   }
 
   handleCheckin(event) {
-    this.setState({checkin: event.target.value}, function () {
+    this.setState({checkin: event.target.value}, () => {
       this.props.formatSearchUrl(this.state.checkin, 'checkin');
     });
   }
 
   handleCheckout(event) {
-    this.setState({checkout: event.target.value}, function () {
+    this.setState({checkout: event.target.value}, () => {
       this.props.formatSearchUrl(this.state.checkout, 'checkout');
     });
   }

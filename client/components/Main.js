@@ -20,13 +20,14 @@ class Main extends React.Component {
     this.todaysDate = this.todaysDate.bind(this);
     this.todaysDatePlusThree = this.todaysDatePlusThree.bind(this);
     this.formatErrorMessages = this.formatErrorMessages.bind(this);
+    this.applyState = this.applyState.bind(this);
 
     this.state = {
       location: '',
       guests: '1',
       blank: false,
-      checkinDate: '',
-      checkoutDate: '',
+      checkin: '',
+      checkout: '',
       messages: []
     };
   }
@@ -60,27 +61,27 @@ class Main extends React.Component {
   }
 
   checkIfSearchBlank() {
-    if (this.state.location === '' || this.state.checkinDate === '' || this.state.checkoutDate === '') {
+    if (this.state.location === ''
+        || this.state.checkin === ''
+        || this.state.checkout === '') {
       this.formatErrorMessages();
     } else {
-      this.setState({blank: false}, function() {
-        this.search();
-      });
+      this.setState({blank: false}, this.search);
     }
   }
 
   formatErrorMessages() {
-    let messages = [];
-    if(this.state.location === '') {
-      messages.push('Location cannot be blank!');
-    }
+    const messages = [];
 
-    if(this.state.checkinDate === '') {
-      messages.push('Check In Date cannot be blank!');
-    }
+    const validations = {
+      checkin: 'Check In',
+      checkout: 'Check Out',
+      location: 'Location'
+    };
 
-    if(this.state.checkoutDate === '') {
-      messages.push('Check Out Date cannot be blank!');
+    for(const obj in this.state) {
+      if (this.state[obj] === '')
+        messages.push(`${validations[obj]} cannot be empty!`);
     }
 
     this.setState({
@@ -89,22 +90,18 @@ class Main extends React.Component {
     });
   }
 
+  applyState(value, selector) {
+    this.setState({[selector]: value});
+  }
+
   formatSearchUrl(value, selector) {
-    if (selector === 'location') {
-      this.setState({ location: value });
-    }
-
-    if (selector === 'guests') {
-      this.setState({ guests: value });
-    }
-
-    if (selector === 'checkin') {
-      this.setState({ checkinDate: value });
-    }
-
-    if (selector === 'checkout') {
-      this.setState({ checkoutDate: value });
-    }
+    const map = {
+      'location': this.applyState,
+      'guests': this.applyState,
+      'checkin': this.applyState,
+      'checkout': this.applyState
+    };
+    return map[selector](value, selector);
   }
 
   search() {
