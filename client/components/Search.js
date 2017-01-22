@@ -23,10 +23,10 @@ class Search extends React.Component {
     return(
       <div>
         <form className="navbar-form navbar-left" onSubmit={this.handleSubmit}>
-          <div className="form-group">
-            <input type="text" value={this.state.value} onChange={this.handleChange} className="form-control" placeholder="Search..." />
+          <div className="form-group search-group">
+            <input type="text" value={this.state.value} onChange={this.handleChange} className="form-control search-field" placeholder="Search..." />
           </div>
-          <button type="submit" className="btn btn-default">Search</button>
+          <button type="submit" className="btn btn-default search-button">Search</button>
         </form>
       </div>
     );

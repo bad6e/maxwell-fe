@@ -24,9 +24,14 @@ class GuestNumber extends React.Component {
 
   render() {
     return (
-      <select value={this.state.value} onChange={this.handleChange} className="form-control navbar-right navbar-form">
-        {this.renderDropDown(16)}
-      </select>
+      <form className="form-inline">
+        <div className="navbar-form navbar-right form-group">
+          <label className="label-date" htmlFor="exampleInputGuests">Guests</label>
+          <select value={this.state.value} onChange={this.handleChange} className="form-control navbar-right navbar-form guest-select" id="exampleInputGuests">
+            {this.renderDropDown(16)}
+          </select>
+        </div>
+      </form>
     );
   }
 }
