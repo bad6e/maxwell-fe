@@ -69,18 +69,17 @@ class Main extends React.Component {
   }
 
   formatErrorMessages() {
-    let messages = [];
+    const messages = [];
 
-    if(this.state.location === '') {
-      messages.push('Location cannot be blank!');
+    const map = {
+      checkin: 'Check In',
+      checkout: 'Check Out',
+      location: 'Location'
     }
 
-    if(this.state.checkin === '') {
-      messages.push('Check In Date cannot be blank!');
-    }
-
-    if(this.state.checkout === '') {
-      messages.push('Check Out Date cannot be blank!');
+    for(const obj in this.state) {
+      if (this.state[obj] === '')
+        messages.push(`${map[obj]} cannot be empty!`)
     }
 
     this.setState({
@@ -101,7 +100,7 @@ class Main extends React.Component {
       'checkout': this.applyState
 
     }
-    return map[selector](value, selector)
+    return map[selector](value, selector);
   }
 
   search() {
