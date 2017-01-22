@@ -9,23 +9,23 @@ class GuestNumber extends React.Component {
   }
 
   handleChange(event) {
-    this.setState({value: event.target.value}, function () {
+    this.setState({value: event.target.value}, () => {
       this.props.formatSearchUrl(this.state.value, 'guests');
     });
   }
 
-  renderDropDown() {
-    const rows = [];
-    for (var i = 1; i < 17; i++) {
-      rows.push(<option key={i} value={i}>{i}</option>);
-    }
-    return rows;
+  renderDropDown(numberOfRows) {
+    return Array.from({ length: (numberOfRows)})
+                .map((e, i) => {
+                  const rows = i + 1;
+                  return <option key={rows} value={rows}>{rows}</option>;
+                });
   }
 
   render() {
     return (
       <select value={this.state.value} onChange={this.handleChange} className="form-control navbar-right navbar-form">
-        {this.renderDropDown()}
+        {this.renderDropDown(16)}
       </select>
     );
   }
