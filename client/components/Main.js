@@ -75,11 +75,11 @@ class Main extends React.Component {
       checkin: 'Check In',
       checkout: 'Check Out',
       location: 'Location'
-    }
+    };
 
     for(const obj in this.state) {
       if (this.state[obj] === '')
-        messages.push(`${map[obj]} cannot be empty!`)
+        messages.push(`${map[obj]} cannot be empty!`);
     }
 
     this.setState({
@@ -89,7 +89,7 @@ class Main extends React.Component {
   }
 
   applyState(value, selector) {
-    this.setState({[selector]: value})
+    this.setState({[selector]: value});
   }
 
   formatSearchUrl(value, selector) {
@@ -98,8 +98,7 @@ class Main extends React.Component {
       'guests': this.applyState,
       'checkin': this.applyState,
       'checkout': this.applyState
-
-    }
+    };
     return map[selector](value, selector);
   }
 
