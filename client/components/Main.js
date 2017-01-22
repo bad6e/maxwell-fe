@@ -61,7 +61,9 @@ class Main extends React.Component {
   }
 
   checkIfSearchBlank() {
-    if (this.state.location === '' || this.state.checkin === '' || this.state.checkout === '') {
+    if (this.state.location === ''
+        || this.state.checkin === ''
+        || this.state.checkout === '') {
       this.formatErrorMessages();
     } else {
       this.setState({blank: false}, this.search);
@@ -71,7 +73,7 @@ class Main extends React.Component {
   formatErrorMessages() {
     const messages = [];
 
-    const map = {
+    const validations = {
       checkin: 'Check In',
       checkout: 'Check Out',
       location: 'Location'
@@ -79,7 +81,7 @@ class Main extends React.Component {
 
     for(const obj in this.state) {
       if (this.state[obj] === '')
-        messages.push(`${map[obj]} cannot be empty!`);
+        messages.push(`${validations[obj]} cannot be empty!`);
     }
 
     this.setState({
