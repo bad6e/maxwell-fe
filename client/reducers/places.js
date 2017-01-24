@@ -6,6 +6,9 @@ import {
 function places(state = {
   places: [],
   numberOfGuests: '1',
+  location: '',
+  checkin: '',
+  checkout: '',
   count: '',
   loading: true
 }, action) {

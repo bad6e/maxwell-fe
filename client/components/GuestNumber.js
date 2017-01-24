@@ -21,7 +21,7 @@ class GuestNumber extends React.Component {
       <form className="form-inline">
         <div className="navbar-form navbar-right form-group">
           <label className="label-date" htmlFor="exampleInputGuests">Guests</label>
-          <select value={this.props.numberOfGuests} onChange={(e) => this.props.handleParameterUpdates('numberOfGuests', e.target.value)} className="form-control navbar-right navbar-form guest-select" id="exampleInputGuests">
+          <select value={this.props.numberOfGuests} onChange={(event) => this.props.handleParameterUpdates('numberOfGuests', event.target.value)} className="form-control navbar-right navbar-form guest-select" id="exampleInputGuests">
             {this.renderDropDown(16)}
           </select>
         </div>
@@ -30,10 +30,4 @@ class GuestNumber extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    numberOfGuests: state.numberOfGuests
-  };
-};
-
-export default connect(mapStateToProps, { handleParameterUpdates })(GuestNumber);
+export default GuestNumber;

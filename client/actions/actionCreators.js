@@ -43,6 +43,3 @@ export function handleParameterUpdates(selector, value) {
     }
   };
 }
-
-
-//Make this objects

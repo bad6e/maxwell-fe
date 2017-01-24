@@ -11,8 +11,6 @@ import DatePicker from './DatePicker';
 import Flash from './Flash';
 import LoaderImg from './LoaderImg';
 
-var moment = require('moment');
-
 class Main extends React.Component {
   constructor(props) {
     super(props);
@@ -22,16 +20,10 @@ class Main extends React.Component {
     this.search = this.search.bind(this);
     this.checkIfSearchBlank = this.checkIfSearchBlank.bind(this);
     this.removeFlashMessage = this.removeFlashMessage.bind(this);
-    this.todaysDate = this.todaysDate.bind(this);
-    this.todaysDatePlusThree = this.todaysDatePlusThree.bind(this);
     this.formatErrorMessages = this.formatErrorMessages.bind(this);
 
     this.state = {
-      location: '',
-      guests: '1',
       blank: false,
-      checkin: '',
-      checkout: '',
       messages: []
     };
   }
@@ -42,14 +34,6 @@ class Main extends React.Component {
 
   removeFlashMessage() {
     this.setState({blank: false});
-  }
-
-  todaysDate() {
-    return moment().format('YYYY-MM-DD');
-  }
-
-  todaysDatePlusThree() {
-    return moment().add(3, 'days').format('YYYY-MM-DD');
   }
 
   renderListings(listings) {
@@ -68,9 +52,10 @@ class Main extends React.Component {
   }
 
   checkIfSearchBlank() {
-    if (this.state.location === ''
-        || this.state.checkin === ''
-        || this.state.checkout === '') {
+    const {location, checkin, checkout} = this.props.places;
+    if (location === ''
+        || checkin === ''
+        || checkout === '') {
       this.formatErrorMessages();
     } else {
       this.setState({blank: false}, this.search);
@@ -85,9 +70,8 @@ class Main extends React.Component {
       checkout: 'Check Out',
       location: 'Location'
     };
-
-    for(const obj in this.state) {
-      if (this.state[obj] === '')
+    for(const obj in this.props.places) {
+      if (this.props.places[obj] === '')
         messages.push(`${validations[obj]} cannot be empty!`);
     }
 
@@ -102,7 +86,9 @@ class Main extends React.Component {
   }
 
   search() {
-    const url = `https://api.airbnb.com/v1/listings/search?key=bcxkf89pxe8srriv8h3rj7w9t&location=${this.state.location}&guests=${this.state.guests}&checkin=${this.state.checkinDate}&checkout=${this.state.checkoutDate}`;
+    const {location, numberOfGuests, checkin, checkout} = this.props.places;
+    const url = `https://api.airbnb.com/v1/listings/search?key=bcxkf89pxe8srriv8h3rj7w9t&location=${location}&guests=${numberOfGuests}&checkin=${checkin}&checkout=${checkout}`;
+    console.log(url);
     this.props.searchPlaces(url);
   }
 
@@ -119,14 +105,20 @@ class Main extends React.Component {
           <div className="container-fluid">
             <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
               <Search
+                handleParameterUpdates={this.props.handleParameterUpdates}
                 formatSearchUrl={this.formatSearchUrl}
                 checkIfSearchBlank={this.checkIfSearchBlank}
                 search={this.search}
               />
               <GuestNumber
+                handleParameterUpdates={this.props.handleParameterUpdates}
+                numberOfGuests={this.props.numberOfGuests}
                 formatSearchUrl={this.formatSearchUrl}
               />
               <DatePicker
+                handleParameterUpdates={this.props.handleParameterUpdates}
+                checkin={this.props.checkin}
+                checkout={this.props.checkout}
                 formatSearchUrl={this.formatSearchUrl}
                 todaysDate={this.todaysDate}
                 todaysDatePlusThree={this.todaysDatePlusThree}
