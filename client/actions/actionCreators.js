@@ -1,22 +1,32 @@
 import axios from 'axios';
 
+import {
+  DEFAULT_SEARCH_URL,
+  RAILS_URL
+} from '../constants/constants';
+
 export const RECEIVE_PLACES = 'PLACES-RECEIVE-PLACES';
 export const UPDATE_PARAMS = 'PLACES-UPDATE_PARAMS';
-
-const URL = 'https://api.airbnb.com/v1/listings/search?key=bcxkf89pxe8srriv8h3rj7w9t&location=denver';
-const RAILS_URL = 'http://localhost:3001/api/v1/search';
 
 export function fetchPlaces() {
   return dispatch => {
     return axios.post(`${RAILS_URL}`, {
-      url: `${URL}`
+      url: `${DEFAULT_SEARCH_URL}`
     })
     .then(response => dispatch(receivePlaces(response)));
   };
 }
 
-export function searchPlaces(url) {
-  return dispatch => {
+export function search() {
+  return (dispatch, getState) => {
+    dispatch(searchPlaces(getState().places))
+  }
+}
+
+export function searchPlaces(searchParams) {
+  const {location, numberOfGuests, checkin, checkout} = searchParams;
+  const url = `https://api.airbnb.com/v1/listings/search?key=bcxkf89pxe8srriv8h3rj7w9t&location=${location}&guests=${numberOfGuests}&checkin=${checkin}&checkout=${checkout}`;
+  return (dispatch) => {
     return axios.post(`${RAILS_URL}`, {
       url: `${url}`
     })

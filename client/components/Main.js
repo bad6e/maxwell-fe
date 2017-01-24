@@ -1,7 +1,6 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actionCreators from '../actions/actionCreators';
-import { bindActionCreators } from 'redux';
 
 import Listing from './Listing';
 import GuestNumber from './GuestNumber';
@@ -16,8 +15,6 @@ class Main extends React.Component {
     super(props);
 
     this.renderListings = this.renderListings.bind(this);
-    this.formatSearchUrl = this.formatSearchUrl.bind(this);
-    this.search = this.search.bind(this);
     this.checkIfSearchBlank = this.checkIfSearchBlank.bind(this);
     this.removeFlashMessage = this.removeFlashMessage.bind(this);
     this.formatErrorMessages = this.formatErrorMessages.bind(this);
@@ -58,7 +55,7 @@ class Main extends React.Component {
         || checkout === '') {
       this.formatErrorMessages();
     } else {
-      this.setState({blank: false}, this.search);
+      this.setState({blank: false}, this.props.search);
     }
   }
 
@@ -81,17 +78,6 @@ class Main extends React.Component {
     });
   }
 
-  formatSearchUrl(value, selector) {
-    this.setState({[selector]: value});
-  }
-
-  search() {
-    const {location, numberOfGuests, checkin, checkout} = this.props.places;
-    const url = `https://api.airbnb.com/v1/listings/search?key=bcxkf89pxe8srriv8h3rj7w9t&location=${location}&guests=${numberOfGuests}&checkin=${checkin}&checkout=${checkout}`;
-    console.log(url);
-    this.props.searchPlaces(url);
-  }
-
   render() {
     const { places = [], count } = this.props.places || {};
     const loadImg = this.props.places.loading ? <LoaderImg/> : null;
@@ -106,22 +92,16 @@ class Main extends React.Component {
             <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
               <Search
                 handleParameterUpdates={this.props.handleParameterUpdates}
-                formatSearchUrl={this.formatSearchUrl}
                 checkIfSearchBlank={this.checkIfSearchBlank}
-                search={this.search}
               />
               <GuestNumber
                 handleParameterUpdates={this.props.handleParameterUpdates}
                 numberOfGuests={this.props.numberOfGuests}
-                formatSearchUrl={this.formatSearchUrl}
               />
               <DatePicker
                 handleParameterUpdates={this.props.handleParameterUpdates}
                 checkin={this.props.checkin}
                 checkout={this.props.checkout}
-                formatSearchUrl={this.formatSearchUrl}
-                todaysDate={this.todaysDate}
-                todaysDatePlusThree={this.todaysDatePlusThree}
               />
             </div>
           </div>

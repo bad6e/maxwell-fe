@@ -8,11 +8,11 @@ class DatePicker extends React.Component {
   }
 
   handleCheckin(event) {
-    this.props.handleParameterUpdates('checkin', event.target.value)
+    this.props.handleParameterUpdates('checkin', event.target.value);
   }
 
   handleCheckout(event) {
-    this.props.handleParameterUpdates('checkout', event.target.value)
+    this.props.handleParameterUpdates('checkout', event.target.value);
   }
 
   render() {

@@ -8,7 +8,7 @@ class Search extends React.Component {
   }
 
   handleChange(event) {
-    this.props.handleParameterUpdates('location', event.target.value)
+    this.props.handleParameterUpdates('location', event.target.value);
   }
 
   handleSubmit(event) {
