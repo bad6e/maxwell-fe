@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import css from '../styles/style.css';
 
 // Import Components
-import App from '../components/App';
+import Main from '../components/Main';
 
 // Import Store
 import configureStore from '../store';
@@ -16,7 +16,7 @@ export default class Root extends Component {
   render() {
     return (
       <Provider store={store}>
-        <App />
+        <Main />
       </Provider>
     );
   }

@@ -1,4 +1,7 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import * as actionCreators from '../actions/actionCreators';
+
 import Listing from './Listing';
 import GuestNumber from './GuestNumber';
 import NumberOfResults from './NumberOfResults';
@@ -6,28 +9,18 @@ import Search from './Search';
 import DatePicker from './DatePicker';
 import Flash from './Flash';
 import LoaderImg from './LoaderImg';
-var moment = require('moment');
 
 class Main extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.renderListings = this.renderListings.bind(this);
-    this.formatSearchUrl = this.formatSearchUrl.bind(this);
-    this.search = this.search.bind(this);
     this.checkIfSearchBlank = this.checkIfSearchBlank.bind(this);
     this.removeFlashMessage = this.removeFlashMessage.bind(this);
-    this.todaysDate = this.todaysDate.bind(this);
-    this.todaysDatePlusThree = this.todaysDatePlusThree.bind(this);
     this.formatErrorMessages = this.formatErrorMessages.bind(this);
-    this.applyState = this.applyState.bind(this);
 
     this.state = {
-      location: '',
-      guests: '1',
       blank: false,
-      checkin: '',
-      checkout: '',
       messages: []
     };
   }
@@ -38,14 +31,6 @@ class Main extends React.Component {
 
   removeFlashMessage() {
     this.setState({blank: false});
-  }
-
-  todaysDate() {
-    return moment().format('YYYY-MM-DD');
-  }
-
-  todaysDatePlusThree() {
-    return moment().add(3, 'days').format('YYYY-MM-DD');
   }
 
   renderListings(listings) {
@@ -64,12 +49,13 @@ class Main extends React.Component {
   }
 
   checkIfSearchBlank() {
-    if (this.state.location === ''
-        || this.state.checkin === ''
-        || this.state.checkout === '') {
+    const {location, checkin, checkout} = this.props.places;
+    if (location === ''
+        || checkin === ''
+        || checkout === '') {
       this.formatErrorMessages();
     } else {
-      this.setState({blank: false}, this.search);
+      this.setState({blank: false}, this.props.search);
     }
   }
 
@@ -81,9 +67,8 @@ class Main extends React.Component {
       checkout: 'Check Out',
       location: 'Location'
     };
-
-    for(const obj in this.state) {
-      if (this.state[obj] === '')
+    for(const obj in this.props.places) {
+      if (this.props.places[obj] === '')
         messages.push(`${validations[obj]} cannot be empty!`);
     }
 
@@ -91,25 +76,6 @@ class Main extends React.Component {
       blank: true,
       messages
     });
-  }
-
-  applyState(value, selector) {
-    this.setState({[selector]: value});
-  }
-
-  formatSearchUrl(value, selector) {
-    const map = {
-      'location': this.applyState,
-      'guests': this.applyState,
-      'checkin': this.applyState,
-      'checkout': this.applyState
-    };
-    return map[selector](value, selector);
-  }
-
-  search() {
-    const url = `https://api.airbnb.com/v1/listings/search?key=bcxkf89pxe8srriv8h3rj7w9t&location=${this.state.location}&guests=${this.state.guests}&checkin=${this.state.checkinDate}&checkout=${this.state.checkoutDate}`;
-    this.props.searchPlaces(url);
   }
 
   render() {
@@ -125,17 +91,17 @@ class Main extends React.Component {
           <div className="container-fluid">
             <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
               <Search
-                formatSearchUrl={this.formatSearchUrl}
+                handleParameterUpdates={this.props.handleParameterUpdates}
                 checkIfSearchBlank={this.checkIfSearchBlank}
-                search={this.search}
               />
               <GuestNumber
-                formatSearchUrl={this.formatSearchUrl}
+                handleParameterUpdates={this.props.handleParameterUpdates}
+                numberOfGuests={this.props.numberOfGuests}
               />
               <DatePicker
-                formatSearchUrl={this.formatSearchUrl}
-                todaysDate={this.todaysDate}
-                todaysDatePlusThree={this.todaysDatePlusThree}
+                handleParameterUpdates={this.props.handleParameterUpdates}
+                checkin={this.props.checkin}
+                checkout={this.props.checkout}
               />
             </div>
           </div>
@@ -149,4 +115,10 @@ class Main extends React.Component {
   }
 }
 
-export default Main;
+const mapStateToProps = (state) => {
+  return {
+    places: state.places
+  };
+};
+
+export default connect(mapStateToProps, actionCreators)(Main);
