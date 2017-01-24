@@ -10,7 +10,7 @@ class Search extends React.Component {
 
   handleChange(event) {
     this.setState({value: event.target.value}, ()=> {
-      this.props.formatSearchUrl(this.state.value, 'location');
+    this.props.formatSearchUrl(this.state.value, 'location');
     });
   }
 

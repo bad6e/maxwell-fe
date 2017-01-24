@@ -1,17 +1,11 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { handleParameterUpdates } from '../actions/actionCreators';
 
 class GuestNumber extends React.Component {
   constructor() {
     super();
-    this.state = {value: '1'};
-    this.handleChange = this.handleChange.bind(this);
     this.renderDropDown= this.renderDropDown.bind(this);
-  }
-
-  handleChange(event) {
-    this.setState({value: event.target.value}, () => {
-      this.props.formatSearchUrl(this.state.value, 'guests');
-    });
   }
 
   renderDropDown(numberOfRows) {
@@ -27,7 +21,7 @@ class GuestNumber extends React.Component {
       <form className="form-inline">
         <div className="navbar-form navbar-right form-group">
           <label className="label-date" htmlFor="exampleInputGuests">Guests</label>
-          <select value={this.state.value} onChange={this.handleChange} className="form-control navbar-right navbar-form guest-select" id="exampleInputGuests">
+          <select value={this.props.numberOfGuests} onChange={(e) => this.props.handleParameterUpdates('numberOfGuests', e.target.value)} className="form-control navbar-right navbar-form guest-select" id="exampleInputGuests">
             {this.renderDropDown(16)}
           </select>
         </div>
@@ -36,4 +30,10 @@ class GuestNumber extends React.Component {
   }
 }
 
-export default GuestNumber;
+const mapStateToProps = (state) => {
+  return {
+    numberOfGuests: state.numberOfGuests
+  };
+};
+
+export default connect(mapStateToProps, { handleParameterUpdates })(GuestNumber);

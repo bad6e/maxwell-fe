@@ -1,4 +1,8 @@
-import React from 'react';
+import React, { Component } from 'react'
+import { connect } from 'react-redux';
+import * as actionCreators from '../actions/actionCreators';
+import { bindActionCreators } from 'redux';
+
 import Listing from './Listing';
 import GuestNumber from './GuestNumber';
 import NumberOfResults from './NumberOfResults';
@@ -6,11 +10,12 @@ import Search from './Search';
 import DatePicker from './DatePicker';
 import Flash from './Flash';
 import LoaderImg from './LoaderImg';
+
 var moment = require('moment');
 
 class Main extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.renderListings = this.renderListings.bind(this);
     this.formatSearchUrl = this.formatSearchUrl.bind(this);
@@ -20,7 +25,6 @@ class Main extends React.Component {
     this.todaysDate = this.todaysDate.bind(this);
     this.todaysDatePlusThree = this.todaysDatePlusThree.bind(this);
     this.formatErrorMessages = this.formatErrorMessages.bind(this);
-    this.applyState = this.applyState.bind(this);
 
     this.state = {
       location: '',
@@ -93,18 +97,8 @@ class Main extends React.Component {
     });
   }
 
-  applyState(value, selector) {
-    this.setState({[selector]: value});
-  }
-
   formatSearchUrl(value, selector) {
-    const map = {
-      'location': this.applyState,
-      'guests': this.applyState,
-      'checkin': this.applyState,
-      'checkout': this.applyState
-    };
-    return map[selector](value, selector);
+    this.setState({[selector]: value});
   }
 
   search() {
@@ -149,4 +143,10 @@ class Main extends React.Component {
   }
 }
 
-export default Main;
+const mapStateToProps = (state) => {
+  return {
+    places: state.places
+  };
+};
+
+export default connect(mapStateToProps, actionCreators)(Main);
