@@ -34,15 +34,13 @@ class Main extends React.Component {
   }
 
   renderListings(listings) {
-    let n=0;
-    return listings.map(listing => {
+    return listings.map((listing, i) => {
       const info = listing.listing;
-      n++;
       return (
         <Listing
           key={info.id}
           info={info}
-          number={n}
+          number={i + 1}
         />
       );
     });
